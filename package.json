@@ -1,0 +1,46 @@
+{
+  "name": "school-management-desktop",
+  "version": "1.0.0",
+  "description": "School Management System — desktop app",
+  "main": "electron/main.js",
+  "author": "Your Company",
+  "scripts": {
+    "postinstall": "cd backend && npm install && cd ../frontend && npm install",
+    "build:frontend": "cd frontend && npm run build && rm -rf ../frontend-dist && cp -r dist ../frontend-dist",
+    "build:template-db": "node backend/scripts/build-template-db.js",
+    "prebuild": "npm run build:frontend && npm run build:template-db",
+    "dist:win": "npm run prebuild && electron-builder --win",
+    "dist:mac": "npm run prebuild && electron-builder --mac",
+    "dist:all": "npm run prebuild && electron-builder --win --mac"
+  },
+  "devDependencies": {
+    "electron": "^31.0.0",
+    "electron-builder": "^24.13.3"
+  },
+  "build": {
+    "appId": "com.yourcompany.schoolmanagementsystem",
+    "productName": "School Management System",
+    "directories": {
+      "output": "release"
+    },
+    "files": [
+      "electron/**/*"
+    ],
+    "extraResources": [
+      { "from": "backend", "to": "backend", "filter": ["**/*", "!node_modules/.cache", "!prisma/*.db"] },
+      { "from": "frontend-dist", "to": "frontend-dist" },
+      { "from": "backend/prisma/template.db", "to": "template.db" }
+    ],
+    "win": {
+      "target": "nsis"
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true
+    },
+    "mac": {
+      "target": "dmg",
+      "category": "public.app-category.education"
+    }
+  }
+}

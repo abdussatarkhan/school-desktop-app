@@ -1,0 +1,7 @@
+node_modules/
+frontend-dist/
+release/
+backend/prisma/*.db
+backend/prisma/template.db
+.DS_Store
+*.log
