@@ -1,6 +1,4 @@
-// Prisma schema for School Management System
-// Uses PostgreSQL so data persists correctly on cloud hosts like Render.
-// DATABASE_URL is provided by your Postgres instance (see DEPLOYMENT.md).
+// Prisma schema for School Management System (SQLite / desktop build)
 
 generator client {
   provider = "prisma-client-js"
@@ -11,18 +9,14 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-enum Role {
-  ADMIN
-  TEACHER
-  STUDENT
-  PARENT
-}
+// SQLite has no native enum support in Prisma, so Role is a plain string.
+// Valid values: "ADMIN" | "TEACHER" | "STUDENT" | "PARENT"
 
 model User {
   id           Int      @id @default(autoincrement())
   email        String   @unique
   passwordHash String
-  role         Role
+  role         String
   isActive     Boolean  @default(true)
   createdAt    DateTime @default(now())
   updatedAt    DateTime @updatedAt
