@@ -20,9 +20,10 @@
   "build": {
     "appId": "com.yourcompany.schoolmanagementsystem",
     "productName": "School Management System",
-    "directories": {
+   "directories": {
       "output": "release"
     },
+    "publish": null,
     "files": [
       "electron/**/*"
     ],
